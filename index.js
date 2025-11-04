@@ -22,3 +22,21 @@ const db = mysql.createConnection({
     database: 'hollywood',
     port:  3306
 });
+
+db.connect((err)=> {
+    if (err){
+        console.error('Error Connecting to MYSQL:' + err.stack);
+        return;
+    }
+    console.log('Connection Succesfully');
+});
+
+//Membuat Method GET
+app.get('/film', (req, res) => {
+    let sql = "SELECT * FROM film";
+    db.query(sql, (err, results) => {
+        if (err) throw err;
+        console.log(results);
+        res.send(results);
+    });
+});
