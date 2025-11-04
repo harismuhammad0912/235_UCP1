@@ -40,3 +40,18 @@ app.get('/film', (req, res) => {
         res.send(results);
     });
 });
+
+
+//Membuat Method POST
+app.post('/film', (req, res) => {
+    const { id, nama_film, tahun_terbit, deskripsi, sutradara,genre } = req.body;
+    const sql = 'INSERT INTO film (id, nama_film, tahun_terbit, deskripsi, sutradara, genre) VALUES (?, ?, ?, ?, ?)';      
+    db.query(sql, [id, nama_film, tahun_terbit, deskripsi, sutradara, genre], (err, results) => {
+      if (err) {
+        console.error('Error executing query: ' + err.stack);
+        res.status(500).send('Error executing query');
+        return;
+      }
+      res.status(201).json({ id: results.insertid, nama_film, tahun_terbit, deskripsi, sutradara, genre });
+    });
+});
